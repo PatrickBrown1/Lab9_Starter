@@ -69,21 +69,21 @@
     </form>
 
     <section id="error-btns">
-      <button>Console Log</button>
-      <button>Console Error</button>
-      <button>Console Count</button>
-      <button>Console Warn</button>
-      <button>Console Assert</button>
-      <button>Console Clear</button>
-      <button>Console Dir</button>
-      <button>Console dirxml</button>
-      <button>Console Group Start</button>
-      <button>Console Group End</button>
-      <button>Console Table</button>
-      <button>Start Timer</button>
-      <button>End Timer</button>
-      <button>Console Trace</button>
-      <button>Trigger a Global Error</button>
+      <button onclick='console.log("this is a console log")'>Console Log</button>
+      <button onclick='console.error("there was an error")'>Console Error</button>
+      <button onclick='console.count(document.querySelector("#operator").value)'>Console Count</button>
+      <button onclick='console.warn("this is a console warning")'>Console Warn</button>
+      <button onclick='handleAssert()'>Console Assert</button>
+      <button onclick='console.clear()'>Console Clear</button>
+      <button onclick='console.dir(document.head)'>Console Dir</button>
+      <button onclick='console.dirxml(document.head)'>Console dirxml</button>
+      <button onclick='console.group("new label")'>Console Group Start</button>
+      <button onclick='console.groupEnd("new label")'>Console Group End</button>
+      <button onclick='console.table([{name: "error 1", cause: "bad js"}, {name: "error 2", cause: "bad html"}])'>Console Table</button>
+      <button onclick='console.time("time label")'>Start Timer</button>
+      <button onclick='console.timeEnd("time label")'>End Timer</button>
+      <button onclick='console.trace()'>Console Trace</button>
+      <button onclick='triggerGlobal()'>Trigger a Global Error</button>
     </section>
   </main>
 
@@ -102,6 +102,22 @@
 
     // Start your code here
     // You may move this JS to another file if you wish
+    let handleAssert = () => {
+      const firstNum = document.querySelector('#first-num').value || 0;
+      const secondNum = document.querySelector('#second-num').value || 0;
+      const operator = document.querySelector('#operator').value;
+      const evalString = `${firstNum} ${operator} ${secondNum}`;
+      const evalVal = eval(evalString);
+      const reason = `operation should always be equal to 1`;
+      
+      console.assert(evalVal == 1, {firstNum, secondNum, operator, reason});
+    }
+
+    let triggerGlobal = () => {
+      // reassign const
+      const a = 5;
+      a = 6;
+    }
   </script>
 </body>
 
