@@ -98,7 +98,7 @@
         let secondNum = document.querySelector('#second-num').value;
 
         if(isNaN(firstNum) || isNaN(secondNum)) {
-          throw new SyntaxError("Your inputs were malformed. Please try again");
+          throw new InputError({fieldOne: firstNum, fieldTwo: secondNum});
         }
         let operator = document.querySelector('#operator').value;
         output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
@@ -128,6 +128,16 @@
       // reassign const
       const a = 5;
       a = 6;
+    }
+
+    class InputError extends Error{
+      constructor(m) {
+        super(m);
+        this.name = "Input Error";
+        this.fieldOneError = isNaN(m.fieldOne);
+        this.fieldTwoError = isNaN(m.fieldTwo);
+        this.message = `There was an input error. ${isNaN(m.fieldOne) ? "Field one is not a valid input." : ""} ${isNaN(m.fieldTwo) ? "Field two is not a valid input" : ""}`;
+      }
     }
   </script>
 </body>
