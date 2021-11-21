@@ -86,7 +86,13 @@
       <button onclick='triggerGlobal()'>Trigger a Global Error</button>
     </section>
   </main>
-
+  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+  <script>
+    window.TrackJS && TrackJS.install({ 
+      token: "a944faa4939f4376af2b41d4c4e768a7"
+      // for more configuration options, see https://docs.trackjs.com
+    });
+  </script>
   <script>
     let form = document.querySelector('form');
     form.addEventListener('submit', e => {
@@ -138,6 +144,10 @@
         this.fieldTwoError = isNaN(m.fieldTwo);
         this.message = `There was an input error. ${isNaN(m.fieldOne) ? "Field one is not a valid input." : ""} ${isNaN(m.fieldTwo) ? "Field two is not a valid input" : ""}`;
       }
+    }
+    window.onerror = function(message, source, lineno, colno, error) {
+      // console.log(error);
+      TrackJS.track(message);
     }
   </script>
 </body>
